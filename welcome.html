@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      :root {
+        --male-primary: #1a56b0;
+        --male-secondary: #0a2d5e;
+        --male-accent: #3a7bd5;
+        --female-primary: #c93869;
+        --female-secondary: #7c1e3f;
+        --female-accent: #ff5f8d;
+        --dark-bg: #121212;
+        --dark-surface: #1e1e1e;
+        --light-text: #f5f5f5;
+        --medium-text: #b0b0b0;
+        --dark-text: #333333;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+        font-weight: 300;
+      }
+      .left-side {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+        color: var(--light-text);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .left-side::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(
+            circle at 30% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 8%
+          ),
+          radial-gradient(
+            circle at 70% 60%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 10%
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 5%
+          ),
+          radial-gradient(
+            circle at 80% 10%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 7%
+          );
+        z-index: -1;
+        opacity: 0.6;
+      }
+      .left-side-male {
+        background: linear-gradient(
+          135deg,
+          var(--male-secondary) 0%,
+          var(--male-primary) 100%
+        );
+        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+      }
+
+      .left-side-male::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 45%,
+          var(--male-accent) 55%,
+          transparent 65%
+        );
+        opacity: 0.1;
+        z-index: -1;
+        animation: shimmer 8s infinite linear;
+      }
+      .left-side-female {
+        background: linear-gradient(
+          135deg,
+          var(--female-secondary) 0%,
+          var(--female-primary) 100%
+        );
+        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+      }
+
+      .left-side-female::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 45%,
+          var(--female-accent) 55%,
+          transparent 65%
+        );
+        opacity: 0.1;
+        z-index: -1;
+        animation: shimmer 8s infinite linear;
+      }
+      .right-side {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+        background-color: var(--dark-surface);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .right-side::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          rgba(255, 255, 255, 0.03) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+      h1 {
+        font-size: 2.8rem;
+        margin-bottom: 1.2rem;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 3px;
+        background: currentColor;
+        opacity: 0.6;
+        border-radius: 2px;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        opacity: 0.85;
+        font-weight: 400;
+        letter-spacing: -0.3px;
+        margin-top: 0.5rem;
+      }
+      .right-side h2 {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 220px;
+        height: 220px;
+        margin-top: 3rem;
+        border-radius: 50%;
+        background: var(--dark-bg);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4),
+          inset 0 5px 15px rgba(0, 0, 0, 0.4),
+          inset 0 -5px 15px rgba(255, 255, 255, 0.05);
+        font-size: 4rem;
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.5s ease;
+      }
+
+      .right-side h2:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5),
+          inset 0 5px 15px rgba(0, 0, 0, 0.4),
+          inset 0 -5px 15px rgba(255, 255, 255, 0.05);
+      }
+      .male-theme .right-side h2 {
+        color: var(--male-accent);
+      }
+
+      .female-theme .right-side h2 {
+        color: var(--female-accent);
+      }
+      .male-theme .right-side h2::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        border-radius: 50%;
+        background: conic-gradient(
+          var(--male-accent),
+          transparent 30%,
+          var(--male-secondary) 40%,
+          var(--male-primary) 50%,
+          var(--male-accent) 60%,
+          transparent 70%
+        );
+        animation: rotate 8s linear infinite;
+        z-index: -1;
+        opacity: 0.8;
+        filter: blur(2px);
+      }
+      .female-theme .right-side h2::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        border-radius: 50%;
+        background: conic-gradient(
+          var(--female-accent),
+          transparent 30%,
+          var(--female-secondary) 40%,
+          var(--female-primary) 50%,
+          var(--female-accent) 60%,
+          transparent 70%
+        );
+        animation: rotate 8s linear infinite;
+        z-index: -1;
+        opacity: 0.8;
+        filter: blur(2px);
+      }
+      .right-side h2::after {
+        content: "años";
+        position: absolute;
+        bottom: -50px;
+        font-size: 1.4rem;
+        font-weight: 300;
+        color: var(--medium-text);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .left-side h1,
+      .left-side h2,
+      .right-side h1 {
+        animation: fadeIn 1s ease-out forwards;
+      }
+
+      .left-side h2 {
+        animation-delay: 0.2s;
+      }
+
+      .right-side h1 {
+        animation-delay: 0.4s;
+      }
+
+      .right-side h2 {
+        animation: fadeIn 1s ease-out 0.6s forwards,
+          pulse 3s infinite alternate 1s;
+        opacity: 0;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4),
+            inset 0 5px 15px rgba(0, 0, 0, 0.4),
+            inset 0 -5px 15px rgba(255, 255, 255, 0.05);
+        }
+        100% {
+          transform: scale(1.05);
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5),
+            inset 0 5px 15px rgba(0, 0, 0, 0.4),
+            inset 0 -5px 15px rgba(255, 255, 255, 0.05);
+        }
+      }
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+        }
+
+        .left-side,
+        .right-side {
+          width: 100%;
+          height: 50vh;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        .right-side h2 {
+          width: 180px;
+          height: 180px;
+          font-size: 3.5rem;
+          margin-top: 1.5rem;
+        }
+
+        .right-side h2::after {
+          bottom: -40px;
+          font-size: 1.2rem;
+        }
+      }
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        .right-side h2 {
+          width: 150px;
+          height: 150px;
+          font-size: 3rem;
+        }
+      }
+      @media (min-width: 1600px) {
+        h1 {
+          font-size: 3.5rem;
+        }
+
+        h2 {
+          font-size: 2.8rem;
+        }
+
+        .right-side h2 {
+          width: 280px;
+          height: 280px;
+          font-size: 5rem;
+        }
+
+        .right-side h2::after {
+          bottom: -60px;
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+    <title id="title">Welcome</title>
+  </head>
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const userRaw = params.get("user");
+        if (userRaw) {
+          const user = JSON.parse(decodeURIComponent(userRaw));
+          const { nombre, apellido, sexo, age } = user;
+          document.getElementById("title").innerText = `Bienvenido ${
+            nombre.charAt(0).toUpperCase() + nombre.slice(1)
+          } ${apellido.charAt(0).toUpperCase() + apellido.slice(1)}`;
+          const leftSide = document.createElement("div");
+          leftSide.className = "left-side";
+          if (sexo === "hombre") {
+            leftSide.classList.add("left-side-male");
+          } else if (sexo === "mujer") {
+            leftSide.classList.add("left-side-female");
+          }
+          const welcomeText = document.createElement("h1");
+          welcomeText.textContent = "Bienvenido";
+          const nameText = document.createElement("h2");
+          nameText.textContent =
+            nombre.charAt(0).toUpperCase() +
+            nombre.slice(1) +
+            " " +
+            apellido.charAt(0).toUpperCase() +
+            apellido.slice(1);
+          leftSide.appendChild(welcomeText);
+          leftSide.appendChild(nameText);
+          document.querySelector("body").prepend(leftSide);
+          const rightSide = document.createElement("div");
+          rightSide.className = "right-side";
+          const titleText = document.createElement("h1");
+          titleText.textContent = "Tu edad actual es:";
+          const ageText = document.createElement("h2");
+          ageText.textContent = age;
+          rightSide.appendChild(titleText);
+          rightSide.appendChild(ageText);
+          document.body.appendChild(rightSide);
+          if (sexo === "hombre") {
+            document.body.classList.add("male-theme");
+          } else if (sexo === "mujer") {
+            document.body.classList.add("female-theme");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

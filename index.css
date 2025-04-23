@@ -1,0 +1,373 @@
+:root {
+  --male-primary: #1a56b0;
+  --male-secondary: #0a2d5e;
+  --male-accent: #3a7bd5;
+  --female-primary: #c93869;
+  --female-secondary: #7c1e3f;
+  --female-accent: #ff5f8d;
+  --dark-bg: #121212;
+  --dark-surface: #1e1e1e;
+  --darker-surface: #171717;
+  --light-text: #f5f5f5;
+  --medium-text: #b0b0b0;
+  --dark-text: #333333;
+  --input-bg: #252525;
+  --input-border: #333333;
+  --input-focus-border: #4a4a4a;
+  --accent-color: #3a7bd5;
+  --error-color: #e53935;
+  --success-color: #43a047;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  background-color: var(--dark-bg);
+  color: var(--light-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 30% 20%,
+      rgba(26, 86, 176, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      rgba(201, 56, 105, 0.05) 0%,
+      transparent 50%
+    );
+  z-index: -1;
+  animation: pulseBackground 15s infinite alternate;
+}
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+      circle at 10% 20%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 8%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 6%
+    ),
+    radial-gradient(
+      circle at 40% 70%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 10%
+    ),
+    radial-gradient(
+      circle at 70% 90%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 7%
+    );
+  z-index: -1;
+  opacity: 0.7;
+}
+#formulario {
+  background-color: var(--dark-surface);
+  border-radius: 16px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  animation: formAppear 0.8s ease-out forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+#formulario::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--male-accent),
+    transparent 30%,
+    transparent 70%,
+    var(--female-accent) 100%
+  );
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.5;
+  animation: borderGlow 6s infinite alternate;
+}
+#formulario::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 70%
+  );
+  z-index: -1;
+}
+input,
+select {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  color: var(--light-text);
+  font-size: 1rem;
+  padding: 1rem 1.2rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+input::placeholder {
+  color: var(--medium-text);
+  opacity: 0.7;
+}
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23b0b0b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2rem;
+  cursor: pointer;
+}
+
+select option {
+  background-color: var(--darker-surface);
+  color: var(--light-text);
+  padding: 1rem;
+}
+input[type="date"] {
+  color: var(--medium-text);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  opacity: 0.7;
+  cursor: pointer;
+}
+input:hover,
+select:hover {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+input:focus,
+select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(58, 123, 213, 0.2);
+}
+select:focus option[value="hombre"]:checked ~ #formulario {
+  --accent-color: var(--male-accent);
+}
+
+select:focus option[value="mujer"]:checked ~ #formulario {
+  --accent-color: var(--female-accent);
+}
+#enviar {
+  background: linear-gradient(
+    135deg,
+    var(--male-accent) 0%,
+    var(--female-accent) 100%
+  );
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 1rem;
+  padding: 1.1rem;
+  position: relative;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+#enviar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    var(--male-primary) 0%,
+    var(--female-primary) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+#enviar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+#enviar:hover::before {
+  opacity: 1;
+}
+
+#enviar:active {
+  transform: translateY(1px);
+}
+input:invalid,
+select:invalid {
+  border-color: var(--input-border);
+}
+
+input:valid,
+select:valid {
+  border-color: var(--input-border);
+}
+
+input:focus:invalid,
+select:focus:invalid {
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+}
+
+input:focus:valid,
+select:focus:valid {
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 2px rgba(67, 160, 71, 0.2);
+}
+@keyframes formAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes borderGlow {
+  0% {
+    opacity: 0.3;
+    filter: blur(3px);
+  }
+  50% {
+    opacity: 0.5;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0.3;
+    filter: blur(3px);
+  }
+}
+
+@keyframes pulseBackground {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+input,
+select {
+  animation: inputAppear 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+#nombre {
+  animation-delay: 0.1s;
+}
+
+#apellido {
+  animation-delay: 0.2s;
+}
+
+#sexo {
+  animation-delay: 0.3s;
+}
+
+#fecha {
+  animation-delay: 0.4s;
+}
+
+#enviar {
+  animation: inputAppear 0.5s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+@keyframes inputAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 768px) {
+  #formulario {
+    padding: 2rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  #formulario {
+    padding: 1.5rem;
+  }
+
+  input,
+  select,
+  #enviar {
+    padding: 0.9rem 1rem;
+  }
+}
+@media (min-width: 1600px) {
+  #formulario {
+    max-width: 550px;
+    padding: 4rem;
+  }
+
+  input,
+  select {
+    font-size: 1.1rem;
+    padding: 1.2rem 1.5rem;
+  }
+
+  #enviar {
+    font-size: 1.3rem;
+    padding: 1.3rem;
+  }
+}
